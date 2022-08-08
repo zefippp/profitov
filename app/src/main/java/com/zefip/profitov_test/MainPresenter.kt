@@ -1,6 +1,6 @@
-package com.zefip.demo7877231
+package com.zefip.profitov_test
 
-import com.zefip.demo7877231.PostService.Companion.BASE_URL
+import com.zefip.profitov_test.PostService.Companion.BASE_URL
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

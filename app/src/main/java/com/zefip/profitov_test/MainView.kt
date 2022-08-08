@@ -1,4 +1,4 @@
-package com.zefip.demo7877231
+package com.zefip.profitov_test
 
 import moxy.MvpView
 import moxy.viewstate.strategy.alias.AddToEndSingle

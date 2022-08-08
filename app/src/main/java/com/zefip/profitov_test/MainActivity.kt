@@ -10,8 +10,6 @@ import butterknife.BindString
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.zefip.demo7877231.MainPresenter
-import com.zefip.demo7877231.MainView
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 

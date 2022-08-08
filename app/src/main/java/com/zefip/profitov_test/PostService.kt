@@ -1,9 +1,8 @@
-package com.zefip.demo7877231
+package com.zefip.profitov_test
 
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface PostService {
     @GET("post/{id}")
