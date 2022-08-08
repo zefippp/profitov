@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">profitov</string>
+    <string name="textview_post_text_error">Error</string>
+    <string name="btn_next_post_text">Next</string>
+    <string name="btn_back_post_text">Back</string>
+</resources>
