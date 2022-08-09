@@ -2,71 +2,61 @@ package com.zefip.profitov_test
 
 import android.os.Bundle
 import android.view.View
-import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.ProgressBar
-import android.widget.TextView
-import butterknife.BindString
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
+import com.zefip.profitov_test.databinding.ActivityMainBinding
 import moxy.MvpAppCompatActivity
 import moxy.presenter.InjectPresenter
 
-class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
+class MainActivity : MvpAppCompatActivity(), MainView {
 
-    @InjectPresenter lateinit var mainPresenter: MainPresenter
+    @InjectPresenter
+    lateinit var mainPresenter: MainPresenter
 
-    @BindView(R.id.textview_post_text) lateinit var textViewPostText: TextView
-    @BindView(R.id.webview_post_url) lateinit var webviewPostUrl: WebView
-    @BindView(R.id.progressbar) lateinit var progressBar: ProgressBar
-    @BindString(R.string.textview_post_text_error) lateinit var textViewPostTextError: String
+    private var _binding : ActivityMainBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ButterKnife.bind(this)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setClickListeners()
     }
 
-    @OnClick(R.id.btn_next_post)
-    fun onBtnNextPost() {
-        mainPresenter.nextPost()
-    }
-
-    @OnClick(R.id.btn_back_post)
-    fun onBtnPreviousPost() {
-        mainPresenter.previousPost()
+    private fun setClickListeners() {
+        binding.btnNextPost.setOnClickListener { mainPresenter.nextPost() }
+        binding.btnBackPost.setOnClickListener { mainPresenter.previousPost() }
     }
 
     override fun showProgressBar() {
-        progressBar.visibility = View.VISIBLE
+        binding.progressbar.visibility = View.VISIBLE
     }
 
     override fun hideProgressBar() {
-        progressBar.visibility = View.GONE
+        binding.progressbar.visibility = View.GONE
     }
 
     override fun showTextPost() {
-        textViewPostText.visibility = View.VISIBLE
-        webviewPostUrl.visibility = View.GONE
+        binding.textviewPostText.visibility = View.VISIBLE
+        binding.webviewPostUrl.visibility = View.GONE
     }
 
     override fun showWebpage() {
-        webviewPostUrl.visibility = View.VISIBLE
-        textViewPostText.visibility = View.GONE
+        binding.webviewPostUrl.visibility = View.VISIBLE
+        binding.textviewPostText.visibility = View.GONE
     }
 
     override fun setTextPost(text: String) {
-        textViewPostText.text = text
+        binding.textviewPostText.text = text
     }
 
     override fun setTextPostError(error: Int) {
-        textViewPostText.text = "$textViewPostTextError $error"
+        binding.textviewPostText.text = "${getString(R.string.textview_post_text_error)} $error"
     }
 
     override fun openWebpage(url: String) {
-        webviewPostUrl.webViewClient = WebViewClient()
-        webviewPostUrl.settings.javaScriptEnabled = true
-        webviewPostUrl.loadUrl(url)
+        binding.webviewPostUrl.webViewClient = WebViewClient()
+        binding.webviewPostUrl.settings.javaScriptEnabled = true
+        binding.webviewPostUrl.loadUrl(url)
     }
 
     override fun onDestroy() {
