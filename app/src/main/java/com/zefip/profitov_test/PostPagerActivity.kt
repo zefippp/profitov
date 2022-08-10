@@ -27,10 +27,10 @@ class PostPagerActivity : MvpAppCompatActivity(), PostPagerView {
         setContentView(binding.root)
     }
 
-    override fun initViewPager(countPosts: ArrayList<Post>) {
+    override fun initViewPager(posts: ArrayList<Post>) {
         viewPager = binding.pager
         val pagerAdapter = PostPagerAdapter(this.supportFragmentManager)
-        for (post in countPosts) {
+        for (post in posts) {
             when (post.type) {
                 POST_TYPE_TEXT -> pagerAdapter.addFragment(PostTextFragment(post.payload.text))
                 else -> pagerAdapter.addFragment(PostWebPageFragment(post.payload.url))

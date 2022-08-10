@@ -16,7 +16,6 @@ class PostPagerPresenter : MvpPresenter<PostPagerView>() {
 
     lateinit var compositeDisposable: CompositeDisposable
     lateinit var postInterface: PostService
-    private var mPosts = ArrayList<Post>()
 
     override fun onFirstViewAttach() {
         compositeDisposable = CompositeDisposable()
@@ -44,10 +43,6 @@ class PostPagerPresenter : MvpPresenter<PostPagerView>() {
         viewState.hideProgressBar()
     }
 
-    private fun getPostsHandleResponse(posts: ArrayList<Int>) {
-        getPostForCurrentPage(posts)
-    }
-
     private fun onError(e: Throwable?) {
         if (e is HttpException) {
             e.printStackTrace()
@@ -55,21 +50,26 @@ class PostPagerPresenter : MvpPresenter<PostPagerView>() {
             viewState.hideProgressBar()
         }
     }
-    private fun getPostForCurrentPage(posts: ArrayList<Int>) {
-        for (post in posts) {
+
+    private fun getPostsHandleResponse(postsIds: ArrayList<Int>) {
+        val posts = ArrayList<Post>()
+        for (post in postsIds) {
             compositeDisposable
                 .add(
                     postInterface.getPostById(post)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
-                        .subscribe({ mPosts.add(it) }, this::onError, this::getPostByIdOnComplete)
+                        .subscribe(
+                            { posts.add(it) },
+                            this::onError,
+                            { getPostByIdOnComplete(posts) })
                 )
         }
     }
 
-    private fun getPostByIdOnComplete() {
+    private fun getPostByIdOnComplete(posts: ArrayList<Post>) {
         viewState.hideProgressBar()
-        viewState.initViewPager(mPosts)
+        viewState.initViewPager(posts)
     }
 
     fun compositeDisposableClear() {
