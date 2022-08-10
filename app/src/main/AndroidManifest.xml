@@ -17,7 +17,7 @@
         android:theme="@style/Theme.Profitov_test"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".PostPagerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
